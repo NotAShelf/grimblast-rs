@@ -11,31 +11,31 @@ use clap::Parser;
 
 pub struct Args {
     #[clap(short, long)]
-    notify: bool,
+    pub notify: bool,
 
     #[clap(short, long)]
-    cursor: bool,
+    pub cursor: bool,
 
     #[clap(short, long)]
-    freeze: bool,
+    pub freeze: bool,
 
     #[clap(short, long, default_value = "no")]
-    wait: String,
+    pub wait: String,
 
     #[clap(short, long)]
-    scale: Option<String>,
+    pub scale: Option<String>,
 
     #[clap(short, long, default_value = "-1")]
-    hyprpicker_pid: i32,
+    pub hyprpicker_pid: i32,
 
     pub action: Option<String>,
 
-    subject: Option<String>,
+    pub subject: Option<String>,
 
-    file: Option<String>,
+    pub file: Option<String>,
 
-    file_editor: Option<String>,
+    pub file_editor: Option<String>,
 
     #[clap(long, action = clap::ArgAction::HelpLong)]
-    pub help: bool,
+    pub help: Option<bool>,
 }
