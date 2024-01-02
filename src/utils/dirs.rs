@@ -28,7 +28,14 @@ pub fn get_target_directory() -> String {
 }
 
 pub fn tmp_editor_directory() -> String {
-    String::from("/tmp")
+    // if tmp directory doesn't exist, or is not writable
+    // exit with an error
+    // else return the /tmp directory
+    if Path::new("/tmp").exists() {
+        String::from("/tmp")
+    } else {
+        panic!("Unable to find /tmp directory");
+    }
 }
 
 pub fn env_editor_confirm() {

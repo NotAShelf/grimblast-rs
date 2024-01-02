@@ -1,29 +1,21 @@
-use crate::utils::screenshot::take_screenshot;
+use hyprland::data::Client;
+use hyprland::shared::HyprDataActiveOptional;
+use libwayshot::{CaptureRegion, WayshotConnection};
 
-use serde_json::Value;
-use std::fs;
-use std::io::Write;
-use std::process::{Command, Stdio, Output};
-
-fn process_output(output: &Output) -> String {
-  // TODO: get focused window and its geometry from hyprland-rs
-  let focused: Value = serde_json::from_slice(&output.stdout).unwrap();
-  let geom: String = format!(
-      "{},{} {}x{}",
-      focused["at"][0], focused["at"][1], focused["size"][0], focused["size"][1]
-  );
-
-  geom
-}
-
-pub fn active_action(screenshot_path: &str) {
-  let output = Command::new("hyprctl")
-      .arg("activewindow")
-      .arg("-j")
-      .output()
-      .expect("Failed to execute command");
-
-  let geom = process_output(&output);
-
-  take_screenshot("-", Some(&geom), None, screenshot_path).unwrap();
+pub fn get_active() -> Result<CaptureRegion, Box<dyn std::error::Error>> {
+    let client_option = Client::get_active()?;
+    if let Some(client) = client_option {
+        let region = CaptureRegion {
+            x_coordinate: client.at.0 as i32,
+            y_coordinate: client.at.1 as i32,
+            width: client.size.0 as i32,
+            height: client.size.1 as i32,
+        };
+        Ok(region)
+    } else {
+        Err(Box::new(std::io::Error::new(
+            std::io::ErrorKind::NotFound,
+            "No active client found",
+        )))
+    }
 }

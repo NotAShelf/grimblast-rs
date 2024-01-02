@@ -1,8 +1,9 @@
 // TODO: remove when all functions are properly referenced
-#![cfg_attr(debug_assertions, allow(dead_code, unused_imports,unused_variables))]
+#![cfg_attr(debug_assertions, allow(dead_code, unused_imports, unused_variables))]
 
 mod utils;
 
 fn main() {
-    unimplemented!();
+    // print the active client using get_active()
+    println!("{:?}", utils::actions::get_active());
 }

@@ -1,4 +1,4 @@
-use super::notify::notify_error;
+use crate::utils::notify::notify_error;
 use std::process::Command;
 use std::thread;
 use std::time::Duration;
@@ -15,9 +15,23 @@ pub fn kill_hyprpicker() {
     }
 }
 
+/// Terminates the program.
+///
+/// This function kills the Hyprpicker process, sends an error notification with a custom message,
+/// and then exits the program with a status code of 2. If killing Hyprpicker is not necessary,
+/// then panic!() should be used instead.
+///
+/// # Arguments
+///
+/// * `msg` - An optional string slice that contains the error message to be displayed. If `None`,
+/// the default message "Bye!" is used.
+///
+/// # Panics
+///
+/// This function does not return. It terminates the program immediately after being called.
 pub fn die(msg: Option<&str>) {
     kill_hyprpicker();
-    let message = msg.unwrap_or("Bye");
+    let message = msg.unwrap_or("Bye!");
     notify_error(&format!("Error: {}", message));
     std::process::exit(2);
 }
