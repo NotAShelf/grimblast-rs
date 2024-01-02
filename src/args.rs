@@ -6,7 +6,6 @@ use clap::Parser;
     version = "v0.1.0",
     about,
     long_about = None,
-    disable_help_flag = true
 )]
 
 pub struct Args {
@@ -18,9 +17,6 @@ pub struct Args {
 
     #[clap(short, long)]
     pub freeze: bool,
-
-    #[clap(short, long, default_value = "no")]
-    pub wait: String,
 
     #[clap(short, long)]
     pub scale: Option<String>,
@@ -35,7 +31,4 @@ pub struct Args {
     pub file: Option<String>,
 
     pub file_editor: Option<String>,
-
-    #[clap(long, action = clap::ArgAction::HelpLong)]
-    pub help: Option<bool>,
 }
