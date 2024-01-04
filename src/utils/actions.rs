@@ -1,8 +1,9 @@
-use hyprland::data::Client;
+use hyprland::data::{Client, Monitor, Monitors};
 use hyprland::shared::HyprDataActiveOptional;
+use hyprland::shared::HyprData;
 use libwayshot::{CaptureRegion, WayshotConnection};
 
-pub fn get_active() -> Result<CaptureRegion, Box<dyn std::error::Error>> {
+pub fn get_active_region() -> Result<CaptureRegion, Box<dyn std::error::Error>> {
     let client_option = Client::get_active()?;
     if let Some(client) = client_option {
         let region = CaptureRegion {
@@ -18,4 +19,16 @@ pub fn get_active() -> Result<CaptureRegion, Box<dyn std::error::Error>> {
             "No active client found",
         )))
     }
+}
+
+// get the name of the focused focused name by intering the monitors struct
+// until we find a monitor that has focused set to true
+pub fn get_focused_monitor() -> Result<String, Box<dyn std::error::Error>> {
+  let monitors = Monitors::get()?;
+  let get_monitors = match monitors.iter().find(|m| m.focused == true) {
+      Some(monitor) => Ok(monitor.name.clone()),
+      None => Err("No focused monitor found".into())
+  };
+
+  get_monitors
 }
