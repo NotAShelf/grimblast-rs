@@ -24,7 +24,7 @@ pub fn notify_error(message: &str) {
                 .unwrap_or_else(|| "Screenshot".into());
             let msg = std::env::args()
                 .nth(2)
-                .unwrap_or_else(|| "Error taking screenshot with grim".into());
+                .unwrap_or_else(|| "Error taking screenshot".into());
             notify(&format!("{} {}", title, msg));
         }
         _ => println!("{}", message),
