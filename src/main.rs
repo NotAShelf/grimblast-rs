@@ -4,6 +4,6 @@
 mod utils;
 
 fn main() {
-    // print the active client using get_active()
-    println!("{:?}", utils::actions::get_active());
+    println!("{:?}", utils::actions::get_active_region());
+    println!("{:?}", utils::actions::get_focused_monitor());
 }
